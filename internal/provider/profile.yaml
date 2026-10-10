@@ -1,0 +1,47 @@
+id: vkcloud
+display_name: VK Cloud
+env_prefix: VKCLOUD_S3_
+uri_scheme: vkcloud-s3
+binary: vkcloud-s3
+default_pool: ru-msk
+path_style: true
+pools:
+  - id: ru-msk
+    endpoint: https://hb.ru-msk.vkcloud-storage.ru
+    location: Москва
+    multi_az: false
+    storage_classes: [STANDARD, STANDARD_IA]
+  - id: kz-ast
+    endpoint: https://hb.kz-ast.vkcloud-storage.ru
+    location: Казахстан
+    multi_az: false
+    storage_classes: [STANDARD, STANDARD_IA]
+storage_classes:
+  - {id: STANDARD, name_ru: Hotbox, price_rub_gb_month: 2.28, verified: false, checked_at: "2026-10-10"}
+  - {id: STANDARD_IA, name_ru: Icebox, price_rub_gb_month: 1.09, verified: false, checked_at: "2026-10-10"}
+features:
+  versioning: true
+  object_lock_config: true
+  object_retention: true
+  object_tagging: true
+  bucket_tagging: false
+  lifecycle: true
+  cors: true
+  bucket_policy: true
+  conditional_writes: false
+  conditional_delete: false
+  multipart: true
+  presign: true
+  acl: true
+limits:
+  max_put_bytes: 32000000000
+  max_parts: 10000
+  rate_limits: {ordinary_per_bucket: 1000, list_per_bucket: 250}
+presign_max_seconds: 604800
+verified: false
+presign_note: "Документированный потолок — 7 дней. Условные PUT/Copy/complete/Delete не подтверждены: запись по умолчанию и move отключены; нужна живая проверка."
+docs_urls:
+  - https://github.com/vk-cs/docs-public
+  - https://github.com/vk-cs/docs-public/blob/master/docs/ru/storage/s3/concepts/features/features.md
+  - https://github.com/vk-cs/docs-public/blob/master/docs/ru/storage/s3/concepts/access/signed-url/signed-url.md
+  - https://cloud.vk.ru/pricelist
