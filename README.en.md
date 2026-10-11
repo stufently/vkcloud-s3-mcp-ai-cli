@@ -1,6 +1,8 @@
 # VK Cloud S3 MCP Server & AI CLI
 
-VK Cloud S3 Object Storage for Claude Code, Cursor and Codex: a stdio MCP server, streaming CLI and embedded agent skill in one Go binary. Read-only MCP is the default; large backup files travel through presigned URLs, multipart or confined file tools.
+A Go MCP server, CLI and installable agent skill for VK Cloud S3 Object Storage. Use Claude Code, Cursor and Codex to inspect objects, recover backups and work with scoped bucket prefixes. ru-msk and kz-ast pools; bucket tagging is disabled. Read-only MCP access is the default. Independent permission levels control writes; destructive operations use the configured approval policy.
+
+[Русское руководство](README.md) · [Russian S3 MCP server directory](https://stufently.github.io/s3-mcp-ai-cli-kit/en/)
 
 ## Features
 
@@ -58,6 +60,18 @@ Resources: `vkcloud-s3://config`, `vkcloud-s3://capabilities`, `vkcloud-s3://poo
 Lists return at most 1000 items plus continuation tokens; versions/multipart have secondary markers. Inline get/put is limited to 262144 bytes; preview to 65536. Use presigned URLs or FILE_ROOT transfers for larger objects. Responses include structuredContent and JSON text; text over 256 KiB is summarized. Errors have code/message/retryable; the SDK adaptively retries 429/503.
 
 Analytics scan max_scan entries (default 10000), marking partial results and tokens. Prefix aggregates page via next_result_offset. They are not billing estimates.
+
+## Use case: Hotbox/Icebox inspection and regional access
+
+The profile includes Moscow `ru-msk` and Kazakhstan `kz-ast` pools. Select the pool matching your bucket, inspect Hotbox/Icebox metadata and create a short-lived URL for an existing archive:
+
+```bash
+vkcloud-s3 --pool ru-msk stat backups/daily/archive.tar
+vkcloud-s3 --pool ru-msk du backups/daily/ --max-scan 10000 --json
+vkcloud-s3 --pool ru-msk presign backups/daily/archive.tar --expires 3600
+```
+
+Examples assume an existing `backups` bucket and `daily/archive.tar` object; replace them with your own names. Cloud compatibility still requires [live verification](TASKS.md).
 
 ## CLI
 
@@ -117,6 +131,12 @@ Lifecycle, ACL, bucket tagging and retention may be cloud features, but this bin
 
 ## FAQ
 
+**How do I choose a VK Cloud S3 endpoint?** Use `VKCLOUD_S3_POOL=ru-msk` or `kz-ast`; the endpoint comes from the [compatibility profile](docs/compat.md). Keep the signing region aligned with the service.
+
+**Does this project cover Hotbox and Icebox?** The profile lists them as `STANDARD` and `STANDARD_IA`. Listing a class does not mean the CLI automatically moves objects between classes; see [VK Cloud research](docs/research/vkcloud-s3.md).
+
+**Can MCP change VK Cloud bucket tags?** `bucket_tagging` is disabled. Object-tag and bucket-tag tools are separate capabilities; inspect `vkcloud-s3://capabilities` and the tool table below.
+
 **What is an MCP server?** A program exposes agent tools/resources through Model Context Protocol; this server uses stdio.
 
 **How do I connect Claude Code?** Save keys with auth set and use project install or the printed user command.
@@ -128,7 +148,20 @@ Lifecycle, ACL, bucket tagging and retention may be cloud features, but this bin
 **Which features are available?** Read capabilities and [compat](docs/compat.md). Registration follows the profile; this version does not configure lifecycle, ACL, bucket tagging or retention.
 
 
-Family: Selectel, Yandex Cloud, VK Cloud, Cloud.ru, Timeweb Cloud, MWS and Beget share the same [kit](https://github.com/stufently/s3-mcp-ai-cli-kit).
+## Related S3 MCP servers
+
+[Browse the full provider directory](https://stufently.github.io/s3-mcp-ai-cli-kit/en/).
+
+| Provider | Repository | Use case |
+|---|---|---|
+| Selectel | [selectel-s3-mcp-ai-cli](https://github.com/stufently/selectel-s3-mcp-ai-cli) | Pool selection and backup recovery |
+| Yandex Cloud | [yandex-s3-mcp-ai-cli](https://github.com/stufently/yandex-s3-mcp-ai-cli) | Object inventory and backup version inspection |
+| VK Cloud | [vkcloud-s3-mcp-ai-cli](https://github.com/stufently/vkcloud-s3-mcp-ai-cli) | Hotbox/Icebox inspection and regional access |
+| Cloud.ru | [cloudru-s3-mcp-ai-cli](https://github.com/stufently/cloudru-s3-mcp-ai-cli) | Evolution Object Storage access diagnostics |
+| Timeweb Cloud | [timeweb-s3-mcp-ai-cli](https://github.com/stufently/timeweb-s3-mcp-ai-cli) | Archive recovery and bounded prefix usage |
+| MWS | [mws-s3-mcp-ai-cli](https://github.com/stufently/mws-s3-mcp-ai-cli) | HMAC access checks and short-lived archive URLs |
+| Beget | [beget-s3-mcp-ai-cli](https://github.com/stufently/beget-s3-mcp-ai-cli) | Browse and restore files from an existing bucket |
+| Shared Go kit | [s3-mcp-ai-cli-kit](https://github.com/stufently/s3-mcp-ai-cli-kit) | Shared MCP, CLI, safety and CI |
 
 ## License
 
