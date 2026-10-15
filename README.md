@@ -12,7 +12,7 @@ A Go MCP server, CLI and agent skill for VK Cloud S3 Object Storage. Connect Cla
 
 ## Быстрый старт
 
-Возьми бинарь своей платформы из Releases, когда версия будет опубликована, либо собери с Go 1.27.2:
+Возьми бинарь своей платформы из [Releases](https://github.com/stufently/vkcloud-s3-mcp-ai-cli/releases/latest) (v0.1.0 опубликован; есть в MCP Registry и Smithery) либо собери с Go 1.27.2:
 
 ```bash
 bash scripts/go.sh go build -o vkcloud-s3 ./cmd/vkcloud-s3
@@ -26,7 +26,7 @@ auth set спрашивает key ID и secret без эха; без TTY чит�
 
 Приоритет: флаги > env > файл. Переменные: VKCLOUD_S3_ACCESS_KEY_ID, VKCLOUD_S3_SECRET_ACCESS_KEY, VKCLOUD_S3_POOL (ru-msk), VKCLOUD_S3_ENDPOINT. HTTP требует VKCLOUD_S3_ALLOW_INSECURE=1.
 
-После публикации образ: ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0; локальная сборка: docker build -t vkcloud-s3 . Образ запускает MCP от uid 65532, содержит CA-сертификаты. Передай креды через приватное окружение/файл.
+Образ: ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0; локальная сборка: docker build -t vkcloud-s3 . Образ запускает MCP от uid 65532, содержит CA-сертификаты. Передай креды через приватное окружение/файл.
 
 ## Возможности
 
