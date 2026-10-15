@@ -28,6 +28,37 @@ After publication: ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0. Build locally 
 
 ## Connect to Claude Code, Cursor, Codex
 
+[![Add vkcloud-s3 MCP server to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=vkcloud-s3&config=eyJjb21tYW5kIjoiZG9ja2VyIiwiYXJncyI6WyJydW4iLCItaSIsIi0tcm0iLCItZSIsIlZLQ0xPVURfUzNfQUNDRVNTX0tFWV9JRCIsIi1lIiwiVktDTE9VRF9TM19TRUNSRVRfQUNDRVNTX0tFWSIsIi1lIiwiVktDTE9VRF9TM19QT09MIiwiZ2hjci5pby9zdHVmZW50bHkvdmtjbG91ZC1zMy1tY3AtYWktY2xpOjAuMS4wIl0sImVudiI6eyJWS0NMT1VEX1MzX0FDQ0VTU19LRVlfSUQiOiIke2VudjpWS0NMT1VEX1MzX0FDQ0VTU19LRVlfSUR9IiwiVktDTE9VRF9TM19TRUNSRVRfQUNDRVNTX0tFWSI6IiR7ZW52OlZLQ0xPVURfUzNfU0VDUkVUX0FDQ0VTU19LRVl9IiwiVktDTE9VRF9TM19QT09MIjoiJHtlbnY6VktDTE9VRF9TM19QT09MfSJ9fQ%3D%3D)
+
+The button installs the MCP server from the Docker image `ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0`, read-only. Keys stay out of the config: Cursor fills `${env:…}` from the environment, so set `VKCLOUD_S3_ACCESS_KEY_ID` and `VKCLOUD_S3_SECRET_ACCESS_KEY` where Cursor starts, and `VKCLOUD_S3_POOL` when the bucket is not in the default pool (empty means the default). The same block works for Windsurf (`mcp_config.json`) and by hand in `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "vkcloud-s3": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "VKCLOUD_S3_ACCESS_KEY_ID",
+        "-e",
+        "VKCLOUD_S3_SECRET_ACCESS_KEY",
+        "-e",
+        "VKCLOUD_S3_POOL",
+        "ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0"
+      ],
+      "env": {
+        "VKCLOUD_S3_ACCESS_KEY_ID": "${env:VKCLOUD_S3_ACCESS_KEY_ID}",
+        "VKCLOUD_S3_SECRET_ACCESS_KEY": "${env:VKCLOUD_S3_SECRET_ACCESS_KEY}",
+        "VKCLOUD_S3_POOL": "${env:VKCLOUD_S3_POOL}"
+      }
+    }
+  }
+}
+```
+
 ```bash
 vkcloud-s3 mcp install --client cursor --dry-run
 vkcloud-s3 mcp install --client cursor
