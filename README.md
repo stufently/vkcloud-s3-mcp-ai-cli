@@ -12,7 +12,7 @@ A Go MCP server, CLI and agent skill for VK Cloud S3 Object Storage. Connect Cla
 
 ## Быстрый старт
 
-Возьми бинарь своей платформы из [Releases](https://github.com/stufently/vkcloud-s3-mcp-ai-cli/releases/latest) (v0.1.1 опубликован; есть в MCP Registry и Smithery) либо собери с Go 1.27.2:
+Возьми бинарь своей платформы из [Releases](https://github.com/stufently/vkcloud-s3-mcp-ai-cli/releases/latest) (v0.1.0 опубликован; есть в MCP Registry и Smithery) либо собери с Go 1.27.2:
 
 ```bash
 bash scripts/go.sh go build -o vkcloud-s3 ./cmd/vkcloud-s3
@@ -26,7 +26,7 @@ auth set спрашивает key ID и secret без эха; без TTY чит�
 
 Приоритет: флаги > env > файл. Переменные: VKCLOUD_S3_ACCESS_KEY_ID, VKCLOUD_S3_SECRET_ACCESS_KEY, VKCLOUD_S3_POOL (ru-msk), VKCLOUD_S3_ENDPOINT. HTTP требует VKCLOUD_S3_ALLOW_INSECURE=1.
 
-Образ: ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.1; локальная сборка: docker build -t vkcloud-s3 . Образ запускает MCP от uid 65532, содержит CA-сертификаты. Передай креды через приватное окружение/файл.
+Образ: ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0; локальная сборка: docker build -t vkcloud-s3 . Образ запускает MCP от uid 65532, содержит CA-сертификаты. Передай креды через приватное окружение/файл.
 
 ## Возможности
 
@@ -38,7 +38,7 @@ auth set спрашивает key ID и secret без эха; без TTY чит�
 
 [![Add vkcloud-s3 MCP server to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=vkcloud-s3&config=eyJjb21tYW5kIjoiZG9ja2VyIiwiYXJncyI6WyJydW4iLCItaSIsIi0tcm0iLCItZSIsIlZLQ0xPVURfUzNfQUNDRVNTX0tFWV9JRCIsIi1lIiwiVktDTE9VRF9TM19TRUNSRVRfQUNDRVNTX0tFWSIsIi1lIiwiVktDTE9VRF9TM19QT09MIiwiZ2hjci5pby9zdHVmZW50bHkvdmtjbG91ZC1zMy1tY3AtYWktY2xpOjAuMS4wIl0sImVudiI6eyJWS0NMT1VEX1MzX0FDQ0VTU19LRVlfSUQiOiIke2VudjpWS0NMT1VEX1MzX0FDQ0VTU19LRVlfSUR9IiwiVktDTE9VRF9TM19TRUNSRVRfQUNDRVNTX0tFWSI6IiR7ZW52OlZLQ0xPVURfUzNfU0VDUkVUX0FDQ0VTU19LRVl9IiwiVktDTE9VRF9TM19QT09MIjoiJHtlbnY6VktDTE9VRF9TM19QT09MfSJ9fQ%3D%3D)
 
-Кнопка ставит MCP из Docker-образа `ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.1` в режиме только чтения. Ключи в конфиг не пишутся: Cursor подставляет `${env:…}` из окружения, поэтому задай `VKCLOUD_S3_ACCESS_KEY_ID` и `VKCLOUD_S3_SECRET_ACCESS_KEY` там, откуда запускается Cursor; `VKCLOUD_S3_POOL` — если бакет не в пуле по умолчанию (пустое значение = пул по умолчанию). Тот же блок — для Windsurf (`mcp_config.json`) и вручную для `~/.cursor/mcp.json`:
+Кнопка ставит MCP из Docker-образа `ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0` в режиме только чтения. Ключи в конфиг не пишутся: Cursor подставляет `${env:…}` из окружения, поэтому задай `VKCLOUD_S3_ACCESS_KEY_ID` и `VKCLOUD_S3_SECRET_ACCESS_KEY` там, откуда запускается Cursor; `VKCLOUD_S3_POOL` — если бакет не в пуле по умолчанию (пустое значение = пул по умолчанию). Тот же блок — для Windsurf (`mcp_config.json`) и вручную для `~/.cursor/mcp.json`:
 
 ```json
 {
@@ -55,7 +55,7 @@ auth set спрашивает key ID и secret без эха; без TTY чит�
         "VKCLOUD_S3_SECRET_ACCESS_KEY",
         "-e",
         "VKCLOUD_S3_POOL",
-        "ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.1"
+        "ghcr.io/stufently/vkcloud-s3-mcp-ai-cli:0.1.0"
       ],
       "env": {
         "VKCLOUD_S3_ACCESS_KEY_ID": "${env:VKCLOUD_S3_ACCESS_KEY_ID}",
